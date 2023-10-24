@@ -1,0 +1,33 @@
+###### ALWAYS PRECISE THE VERSION ########################
+version: '3'
+
+
+##### DEFINE THE SERVICES  ###############################
+services:
+  web:
+    ### 'build': because we have a Dockerfile to build our image. Otherwise we should
+    # use 'image': to build from an image from dockerhub
+    build:
+      ### because we use a custom dockerfile named Dockerfile.dev, we have to define two options
+      # for this key: 'context' & 'dockerfile'. In the case that we do not use custom file, just
+      # give the context as value like this: 'build: .'
+      context: .
+      dockerfile: Dockerfile.dev
+
+    ports:
+      - 3000:3000
+
+    volumes:
+      - /app/node_modules
+      - .:/app
+
+  ### create another service test running (not advised for big projects with multiple files of tests)
+  # tests:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.dev
+
+  #   volumes:
+  #     - /app/node_modules
+  #     - .:/app
+  #   command: ["npm", "run", "test"]

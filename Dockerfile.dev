@@ -1,0 +1,12 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package.json .
+RUN npm install
+
+#### if we use volumes (manualy or in a docker-compose file) it is not strictly necessary to
+# to copy our project in the container. But it's advise to keep it even if setting up volumes
+COPY . .
+
+CMD ["npm", "run", "start"]
